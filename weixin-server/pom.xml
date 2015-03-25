@@ -10,10 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <packaging>war</packaging>
-    <name>message-web v${weixin.server}</name>
+    <name>weixin-server v${weixin.server}</name>
     <artifactId>weixin-server</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.yanmo</groupId>
+            <artifactId>weixin-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
