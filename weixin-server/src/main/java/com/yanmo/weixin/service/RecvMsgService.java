@@ -1,4 +1,4 @@
-package com.yanmo.weixin.service.impl;
+package com.yanmo.weixin.service;
 
 import com.yanmo.weixin.domain.MessageDO;
 

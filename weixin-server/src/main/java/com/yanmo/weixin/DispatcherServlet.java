@@ -47,6 +47,7 @@ public class DispatcherServlet extends GenericServlet {
         setCtx(context);
 //        Timer timer = new Timer();
 //        timer.schedule(new AccessTokenTask(), 0, ACCESS_TOKEN_TASK_PERIOD);
+        // 开个定时任务每一个小时更新一次access token
         ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
         ses.scheduleAtFixedRate((Runnable) ctx.getBean("accessTokenRunnable"), 0, EnvUtils.ACCESS_TOKEN_TASK_PERIOD, TimeUnit.HOURS);
     }

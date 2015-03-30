@@ -4,7 +4,9 @@ package com.yanmo.weixin.domain;
  * Created by yanmo.yx on 2015/3/25.
  */
 public enum Errors {
-        ACCESS_TOKEN_ERROR("ACCESS_TOKEN_ERROR", "access token错误");
+        ACCESS_TOKEN_ERROR("ACCESS_TOKEN_ERROR", "access token错误"),
+
+        PARSE_ACCESS_TOKEN_ERROR("PARSE_ACCESS_TOKEN_ERROR", "解析access token失败");
 
         private String code;
         private String name;

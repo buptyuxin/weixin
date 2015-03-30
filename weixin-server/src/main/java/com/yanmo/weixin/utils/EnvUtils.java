@@ -15,6 +15,8 @@ public class EnvUtils {
 
     public static final String TOKEN = "XA8YQJ1YHgeLs";
 
+    public static final String CHARSET = "UTF-8";
+
     public static String ACCESS_TOKEN = "";
     public static long ACCESS_TOKEN_TASK_PERIOD = 1;    // 1h
 

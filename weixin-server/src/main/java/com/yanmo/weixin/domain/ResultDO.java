@@ -1,13 +1,16 @@
 package com.yanmo.weixin.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by yanmo.yx on 2015/3/25.
  */
-public class ResultDO<T> {
+public class ResultDO<T> implements Serializable {
+
+    private static final long serialVerisonUID = 6750852764071535411L;
     private T module;
-    private boolean success;
+    private boolean success = true;
     private List<Errors> errorList;
 
     public T getModule() {

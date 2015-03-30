@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="recvMsgService" class="com.yanmo.weixin.service.impl.RecvMsgServiceImpl" />
+
+    <bean id="jsonParser" class="com.yanmo.weixin.parser.JsonParser">
+        <property name="jsonMaps">
+            <map>
+                <!--第一个-->
+                <entry>
+                    <key>
+                        <list>
+                            <value>access_token</value>
+                            <value>expires_in</value>
+                        </list>
+                    </key>
+                    <value>com.yanmo.weixin.domain.AccessTokenDO</value>
+                </entry>
+                <!--第二个-->
+                <entry>
+                    <key>
+                        <list>
+                            <value>errcode</value>
+                            <value>errmsg</value>
+                        </list>
+                    </key>
+                    <value>com.yanmo.weixin.domain.JsonErrorDO</value>
+                </entry>
+
+            </map>
+        </property>
+    </bean>
+
+</beans>
