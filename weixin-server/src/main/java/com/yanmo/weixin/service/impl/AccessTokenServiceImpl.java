@@ -1,8 +1,10 @@
 package com.yanmo.weixin.service.impl;
 
+import com.yanmo.weixin.domain.Errors;
 import com.yanmo.weixin.domain.json.AccessTokenDO;
 import com.yanmo.weixin.domain.json.BaseJsonDO;
 import com.yanmo.weixin.domain.ResultDO;
+import com.yanmo.weixin.log.WxLog;
 import com.yanmo.weixin.parser.JsonParser;
 import com.yanmo.weixin.service.AccessTokenService;
 import com.yanmo.weixin.service.HttpClientService;
@@ -39,6 +41,8 @@ public class AccessTokenServiceImpl implements AccessTokenService {
         ResultDO<BaseJsonDO> result = jsonParser.parseJson(json);
         if (result.isSuccess()) {
             return ((AccessTokenDO)result.getModule()).getAccessToken();
+        } else {
+            WxLog.log(result.getErrorList().get(0).getName());
         }
         return "";
     }

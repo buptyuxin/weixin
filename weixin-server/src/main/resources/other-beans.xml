@@ -5,32 +5,4 @@
 
     <bean id="recvMsgService" class="com.yanmo.weixin.service.impl.RecvMsgServiceImpl" />
 
-    <!--<bean id="jsonParser" class="com.yanmo.weixin.parser.JsonParser">-->
-        <!--<property name="jsonMaps">-->
-            <!--<map>-->
-                <!--&lt;!&ndash;第一个&ndash;&gt;-->
-                <!--<entry>-->
-                    <!--<key>-->
-                        <!--<list>-->
-                            <!--<value>access_token</value>-->
-                            <!--<value>expires_in</value>-->
-                        <!--</list>-->
-                    <!--</key>-->
-                    <!--<value>com.yanmo.weixin.domain.json.AccessTokenDO</value>-->
-                <!--</entry>-->
-                <!--&lt;!&ndash;第二个&ndash;&gt;-->
-                <!--<entry>-->
-                    <!--<key>-->
-                        <!--<list>-->
-                            <!--<value>errcode</value>-->
-                            <!--<value>errmsg</value>-->
-                        <!--</list>-->
-                    <!--</key>-->
-                    <!--<value>com.yanmo.weixin.domain.json.JsonErrorDO</value>-->
-                <!--</entry>-->
-
-            <!--</map>-->
-        <!--</property>-->
-    <!--</bean>-->
-
 </beans>

@@ -3,7 +3,6 @@ package com.yanmo.weixin.domain.json;
 /**
  * Created by yanmo.yx on 2015/3/25.
  */
-@Deprecated
 public class AccessTokenDO extends BaseJsonDO {
     private String accessToken;
     private Long expiresIn;
