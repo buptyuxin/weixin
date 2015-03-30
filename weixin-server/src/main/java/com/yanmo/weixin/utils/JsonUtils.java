@@ -12,7 +12,7 @@ public class JsonUtils {
         return gson.toJson(o);
     }
 
-    public static <T> T FromJson(String json, Class<T> clazz) {
+    public static <T> T fromJson(String json, Class<T> clazz) {
         return gson.fromJson(json, clazz);
     }
 }

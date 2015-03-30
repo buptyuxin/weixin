@@ -16,7 +16,7 @@
                             <value>expires_in</value>
                         </list>
                     </key>
-                    <value>com.yanmo.weixin.domain.AccessTokenDO</value>
+                    <value>com.yanmo.weixin.domain.json.AccessTokenDO</value>
                 </entry>
                 <!--第二个-->
                 <entry>
@@ -26,7 +26,7 @@
                             <value>errmsg</value>
                         </list>
                     </key>
-                    <value>com.yanmo.weixin.domain.JsonErrorDO</value>
+                    <value>com.yanmo.weixin.domain.json.JsonErrorDO</value>
                 </entry>
 
             </map>

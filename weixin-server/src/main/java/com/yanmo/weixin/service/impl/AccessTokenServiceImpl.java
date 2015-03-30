@@ -1,20 +1,12 @@
 package com.yanmo.weixin.service.impl;
 
-import com.yanmo.weixin.domain.AccessTokenDO;
-import com.yanmo.weixin.domain.BaseJsonDO;
+import com.yanmo.weixin.domain.json.AccessTokenDO;
+import com.yanmo.weixin.domain.json.BaseJsonDO;
 import com.yanmo.weixin.domain.ResultDO;
 import com.yanmo.weixin.parser.JsonParser;
 import com.yanmo.weixin.service.AccessTokenService;
 import com.yanmo.weixin.service.HttpClientService;
 import com.yanmo.weixin.utils.EnvUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Created by yanmo.yx on 2015/3/25.

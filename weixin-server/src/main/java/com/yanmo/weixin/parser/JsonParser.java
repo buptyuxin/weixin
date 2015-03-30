@@ -1,10 +1,10 @@
 package com.yanmo.weixin.parser;
 
-import com.google.gson.Gson;
-import com.yanmo.weixin.domain.BaseJsonDO;
+import com.yanmo.weixin.domain.json.BaseJsonDO;
 import com.yanmo.weixin.domain.Errors;
 import com.yanmo.weixin.domain.ResultDO;
 import com.yanmo.weixin.log.WxLog;
+import com.yanmo.weixin.utils.JsonUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -14,8 +14,6 @@ import java.util.Map;
  * Created by yanmo.yx on 2015/3/30.
  */
 public class JsonParser {
-
-    public static final Gson gson = new Gson();
 
     private Map<List<String>, Class<? extends BaseJsonDO>> jsonMaps;
 
@@ -49,7 +47,6 @@ public class JsonParser {
         if (StringUtils.isEmpty(json)) {
             return result;
         }
-        Gson gson = JsonParser.gson;
 
         Class<? extends BaseJsonDO> clazz = null;
         boolean isSucc = true;
@@ -70,7 +67,7 @@ public class JsonParser {
         }
 
         if (clazz != null) {
-            BaseJsonDO res = gson.fromJson(json, clazz);
+            BaseJsonDO res = JsonUtils.fromJson(json, clazz);
             result.setModule(res);
         } else {
             result.addError(Errors.PARSE_ACCESS_TOKEN_ERROR);

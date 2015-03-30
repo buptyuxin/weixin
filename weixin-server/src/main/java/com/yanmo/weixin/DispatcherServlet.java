@@ -20,8 +20,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class DispatcherServlet extends GenericServlet {
 
-
-
     private static final String METHOD_GET = "GET";
     private static final String METHOD_POST = "POST";
 
@@ -29,6 +27,8 @@ public class DispatcherServlet extends GenericServlet {
     private static final String POST_CONTENT_TYPE_APPLICATION = "application/x-www-form-urlencoded";
     private static final String POST_CONTENT_TYPE_JSON = "application/json";
     private static final String POST_CONTENT_TYPE_TEXT = "text/xml";
+
+    private static final String SPRING_BEANS_XML = "spring-beans.xml";
 
     private AbstractApplicationContext ctx;
 
@@ -43,7 +43,7 @@ public class DispatcherServlet extends GenericServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        AbstractApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring-beans.xml"});
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext(SPRING_BEANS_XML);
         setCtx(context);
 //        Timer timer = new Timer();
 //        timer.schedule(new AccessTokenTask(), 0, ACCESS_TOKEN_TASK_PERIOD);
