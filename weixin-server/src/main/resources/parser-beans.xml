@@ -9,22 +9,22 @@
                 <!--第一个-->
                 <entry>
                     <key>
-                        <list>
-                            <value>access_token</value>
-                            <value>expires_in</value>
-                        </list>
+                        <value>com.yanmo.weixin.domain.json.AccessTokenDO</value>
                     </key>
-                    <value>com.yanmo.weixin.domain.json.AccessTokenDO</value>
+                    <list>
+                        <value>access_token</value>
+                        <value>expires_in</value>
+                    </list>
                 </entry>
                 <!--第二个-->
                 <entry>
                     <key>
-                        <list>
-                            <value>errcode</value>
-                            <value>errmsg</value>
-                        </list>
+                        <value>com.yanmo.weixin.domain.json.JsonErrorDO</value>
                     </key>
-                    <value>com.yanmo.weixin.domain.json.JsonErrorDO</value>
+                    <list>
+                        <value>errcode</value>
+                        <value>errmsg</value>
+                    </list>
                 </entry>
 
             </map>
@@ -37,22 +37,31 @@
                 <!--用户文本消息-->
                 <entry>
                     <key>
-                        <list>
-                            <value>access_token</value>
-                            <value>expires_in</value>
-                        </list>
+                        <value>1</value>
                     </key>
-                    <value>1</value>
+                    <list>
+                        <value>ToUserName</value>
+                        <value>FromUserName</value>
+                        <value>CreateTime</value>
+                        <value>MsgType</value>
+                        <value>Content</value>
+                        <value>MsgId</value>
+                    </list>
                 </entry>
                 <!--用户图片消息-->
                 <entry>
                     <key>
-                        <list>
-                            <value>errcode</value>
-                            <value>errmsg</value>
-                        </list>
+                        <value>2</value>
                     </key>
-                    <value>2</value>
+                    <list>
+                        <value>ToUserName</value>
+                        <value>FromUserName</value>
+                        <value>CreateTime</value>
+                        <value>MsgType</value>
+                        <value>PicUrl</value>
+                        <value>MediaId</value>
+                        <value>MsgId</value>
+                    </list>
                 </entry>
 
             </map>

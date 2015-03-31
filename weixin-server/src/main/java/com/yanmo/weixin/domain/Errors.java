@@ -6,7 +6,8 @@ package com.yanmo.weixin.domain;
 public enum Errors {
         ACCESS_TOKEN_ERROR("ACCESS_TOKEN_ERROR", "access token错误"),
 
-        PARSE_ACCESS_TOKEN_ERROR("PARSE_ACCESS_TOKEN_ERROR", "解析access token失败");
+        PARSE_JSON_ERROR("PARSE_JSON_ERROR", "解析json失败"),
+        PARSE_XML_ERROR("PARSE_XML_ERROR", "解析xml失败");
 
         private String code;
         private String name;

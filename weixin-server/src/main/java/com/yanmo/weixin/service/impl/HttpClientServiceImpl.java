@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class HttpClientServiceImpl implements HttpClientService {
         try {
             CloseableHttpResponse res = new DefaultHttpClient().execute(httpGet);
             if (res != null && res.getStatusLine().getStatusCode() == 200) {
-                return EntityUtils.toString(res.getEntity(), EnvUtils.CHARSET);
+                return EntityUtils.toString(res.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,10 +45,10 @@ public class HttpClientServiceImpl implements HttpClientService {
             params.add(new BasicNameValuePair(key, parameters.get(key)));
         }
         try {
-            httpPost.setEntity(new UrlEncodedFormEntity(params, EnvUtils.CHARSET));
+            httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
             CloseableHttpResponse res = new DefaultHttpClient().execute(httpPost);
             if (res != null && res.getStatusLine().getStatusCode() == 200) {
-                return EntityUtils.toString(res.getEntity(), EnvUtils.CHARSET);
+                return EntityUtils.toString(res.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

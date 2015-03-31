@@ -1,6 +1,6 @@
 package com.yanmo.weixin.service.impl;
 
-import com.yanmo.weixin.domain.MessageDO;
+import com.yanmo.weixin.domain.MsgDO;
 import com.yanmo.weixin.service.RecvMsgService;
 
 /**
@@ -8,7 +8,7 @@ import com.yanmo.weixin.service.RecvMsgService;
  */
 public class RecvMsgServiceImpl implements RecvMsgService {
     @Override
-    public MessageDO receiveMsg(String msg) {
+    public MsgDO receiveMsg(String msg) {
         return null;
     }
 }

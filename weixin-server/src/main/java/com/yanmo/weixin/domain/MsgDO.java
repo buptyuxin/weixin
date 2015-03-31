@@ -1,6 +1,9 @@
 package com.yanmo.weixin.domain;
 
+import com.google.common.collect.Lists;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,5 +40,36 @@ public class MsgDO implements Serializable{
 
     public void setFeatures(String features) {
         this.features = features;
+    }
+
+    public boolean addProperty(BaseKeyValuePairDO kv) {
+        if (kv == null) {
+            return false;
+        }
+        if (kv.getKey() == null) {
+            return false;
+        }
+        if (properties == null) {
+            properties = Lists.newArrayList();
+        }
+        if (!properties.isEmpty()) {
+            for (BaseKeyValuePairDO property : properties) {
+                if (kv.getKey().equals(property.getKey())) {
+                    property.setValue(kv.getValue());
+                    return true;
+                }
+            }
+        }
+        properties.add(kv);
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "MsgDO{" +
+                "properties=" + properties +
+                ", options=" + options +
+                ", features='" + features + '\'' +
+                '}';
     }
 }

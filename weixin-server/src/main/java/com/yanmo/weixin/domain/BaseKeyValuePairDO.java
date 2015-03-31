@@ -26,4 +26,24 @@ public class BaseKeyValuePairDO implements Serializable {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BaseKeyValuePairDO that = (BaseKeyValuePairDO) o;
+
+        if (key != null ? !key.equals(that.key) : that.key != null) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null) return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseKeyValuePairDO{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package com.yanmo.weixin.parser;
 
+import com.yanmo.weixin.domain.BaseKeyValuePairDO;
 import com.yanmo.weixin.domain.json.BaseJsonDO;
 import com.yanmo.weixin.domain.Errors;
 import com.yanmo.weixin.domain.ResultDO;
@@ -13,32 +14,36 @@ import java.util.Map;
 /**
  * Created by yanmo.yx on 2015/3/30.
  */
-public class JsonParser {
+public class JsonParser extends BaseParser {
 
-    private Map<List<String>, Class<? extends BaseJsonDO>> jsonMaps;
+    private Map<Class<? extends BaseJsonDO>, List<String>> jsonMaps;
 
-    public Map<List<String>, Class<? extends BaseJsonDO>> getJsonMaps() {
+    public Map<Class<? extends BaseJsonDO>, List<String>> getJsonMaps() {
         return jsonMaps;
     }
 
-    public void setJsonMaps(Map<List<String>, String> jsonMaps) {
-        for (List<String> keys : jsonMaps.keySet()) {
-            if (keys != null && !keys.isEmpty()) {
-                Class<?> clazz = null;
-                try {
-                    clazz = Thread.currentThread().getContextClassLoader().loadClass(jsonMaps.get(keys));
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+    public void setJsonMaps(Map<String, List<String>> jsonMaps) {
+        for (String key : jsonMaps.keySet()) {
+            if (key != null && !key.isEmpty()) {
+                List<String> keyWords = jsonMaps.get(key);
+                if (keyWords != null && !keyWords.isEmpty()) {
+                    Class<?> clazz = null;
+                    try {
+                        clazz = Thread.currentThread().getContextClassLoader().loadClass(key);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                        continue;
+                    }
+                    if (clazz != null && BaseJsonDO.class.isAssignableFrom(clazz)) {
+                        this.jsonMaps.put((Class<? extends BaseJsonDO>)clazz, jsonMaps.get(key));
+                        continue;
+                    }
+                    WxLog.log("类错误，加载类失败");
                     continue;
                 }
-                if (clazz != null && BaseJsonDO.class.isAssignableFrom(clazz)) {
-                    this.jsonMaps.put(keys, (Class<? extends BaseJsonDO>) clazz);
-                    continue;
-                }
-                WxLog.log("类错误");
-                continue;
+                WxLog.log("关键词错误");
             }
-            WxLog.log("关键词错误");
+            WxLog.log("类错误");
         }
     }
 
@@ -48,30 +53,14 @@ public class JsonParser {
             return result;
         }
 
-        Class<? extends BaseJsonDO> clazz = null;
-        boolean isSucc = true;
-        for (List<String> keys : jsonMaps.keySet()) {
-            isSucc = true;
-            for (String key : keys) {
-                // 必须包含所有的关键词
-                if (!json.contains(key)) {
-                    isSucc = false;
-                    break;
-                }
+        for (Class<? extends BaseJsonDO> clazz : jsonMaps.keySet()) {
+            if (matchKeyWords(json, jsonMaps.get(clazz))) {
+                BaseJsonDO res = JsonUtils.fromJson(json, clazz);
+                result.setModule(res);
+                return result;
             }
-            if (!isSucc) {
-                continue;
-            }
-            clazz = jsonMaps.get(keys);
-            break;
         }
-
-        if (clazz != null) {
-            BaseJsonDO res = JsonUtils.fromJson(json, clazz);
-            result.setModule(res);
-        } else {
-            result.addError(Errors.PARSE_ACCESS_TOKEN_ERROR);
-        }
+        result.addError(Errors.PARSE_JSON_ERROR);
         return result;
     }
 }
