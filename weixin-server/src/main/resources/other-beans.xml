@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-autowire="byName">
 
-    <bean id="recvMsgService" class="com.yanmo.weixin.service.impl.RecvMsgServiceImpl" />
+    <bean id="recvMsgService" class="com.yanmo.weixin.service.impl.MsgProcessServiceImpl" />
+
+    <bean id="accessTokenRunnable" class="com.yanmo.weixin.task.AccessTokenRunnable" />
+
+    <bean id="accessTokenService" class="com.yanmo.weixin.service.impl.AccessTokenServiceImpl" />
 
 </beans>

@@ -1,7 +1,9 @@
 package com.yanmo.weixin;
 
 import com.google.gson.Gson;
+import com.yanmo.weixin.domain.MsgDO;
 import com.yanmo.weixin.log.WxLog;
+import com.yanmo.weixin.service.MsgProcessService;
 import com.yanmo.weixin.utils.EnvUtils;
 import com.yanmo.weixin.utils.SecurityUtils;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -31,6 +33,15 @@ public class DispatcherServlet extends GenericServlet {
     private static final String SPRING_BEANS_XML = "spring-beans.xml";
 
     private AbstractApplicationContext ctx;
+    private MsgProcessService msgProcessService;
+
+    public MsgProcessService getMsgProcessService() {
+        return msgProcessService;
+    }
+
+    public void setMsgProcessService(MsgProcessService msgProcessService) {
+        this.msgProcessService = msgProcessService;
+    }
 
     public AbstractApplicationContext getCtx() {
         return ctx;
@@ -100,7 +111,17 @@ public class DispatcherServlet extends GenericServlet {
         }
         if (POST_CONTENT_TYPE_TEXT.equals(req.getContentType())) {
             String xml = parse(req);
-            processXml(xml);
+            if (msgProcessService == null) {
+                getCtx().getBean("recvMsgService");
+            }
+            String reply = msgProcessService.processXmlMsg(xml);
+            try {
+                res.getWriter().write(reply);
+                res.getWriter().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else if (POST_CONTENT_TYPE_JSON.equals(req.getContentType())) {
             String json = parse(req);
             processJson(json);
@@ -130,5 +151,10 @@ public class DispatcherServlet extends GenericServlet {
     private void processJson(String json) {
         Gson gson = new Gson();
 
+    }
+
+    public static void main(String[] args) {
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext("parser-beans.xml");
+        System.out.println("asdfa");
     }
 }

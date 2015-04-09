@@ -30,7 +30,11 @@ public class SecurityUtils {
                 return -o1.compareTo(o2);
             }
         });
-        String validator = DigestUtils.sha1Hex(list.toString());
+        StringBuilder sb = new StringBuilder();
+        for (String s : list) {
+            sb.append(s);
+        }
+        String validator = DigestUtils.sha1Hex(sb.toString());
         if (validator != null && validator.equals(signature)) {
             return true;
         }

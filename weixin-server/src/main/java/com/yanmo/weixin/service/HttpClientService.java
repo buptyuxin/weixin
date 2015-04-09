@@ -1,9 +1,5 @@
 package com.yanmo.weixin.service;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-
 import java.util.Map;
 
 /**
@@ -12,5 +8,5 @@ import java.util.Map;
 public interface HttpClientService {
     public String doGet(String url);
 
-    public String doPost(String url, Map<String, String> parameters);
+    public String doPost(String url, Map<String, String> parameters, String data);
 }

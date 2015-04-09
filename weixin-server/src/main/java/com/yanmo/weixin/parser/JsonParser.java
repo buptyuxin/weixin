@@ -8,6 +8,7 @@ import com.yanmo.weixin.log.WxLog;
 import com.yanmo.weixin.utils.JsonUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,10 @@ public class JsonParser extends BaseParser {
                         continue;
                     }
                     if (clazz != null && BaseJsonDO.class.isAssignableFrom(clazz)) {
-                        this.jsonMaps.put((Class<? extends BaseJsonDO>)clazz, jsonMaps.get(key));
+                        if (this.jsonMaps == null) {
+                            this.jsonMaps = new HashMap<>();
+                        }
+                        this.jsonMaps.put((Class<? extends BaseJsonDO>) clazz, jsonMaps.get(key));
                         continue;
                     }
                     WxLog.log("类错误，加载类失败");

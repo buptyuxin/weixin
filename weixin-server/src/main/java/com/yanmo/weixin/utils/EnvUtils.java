@@ -1,9 +1,6 @@
 package com.yanmo.weixin.utils;
 
 
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-
 /**
  * Created by yanmo.yx on 2015/3/25.
  */
@@ -17,6 +14,4 @@ public class EnvUtils {
 
     public static String ACCESS_TOKEN = "";
     public static long ACCESS_TOKEN_TASK_PERIOD = 1;    // 1h
-
-    public static CloseableHttpClient httpClient = HttpClients.createDefault();
 }

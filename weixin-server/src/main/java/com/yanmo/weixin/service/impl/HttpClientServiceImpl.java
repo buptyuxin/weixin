@@ -1,21 +1,19 @@
 package com.yanmo.weixin.service.impl;
 
-import com.google.common.collect.Lists;
 import com.yanmo.weixin.service.HttpClientService;
-import com.yanmo.weixin.utils.EnvUtils;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,14 +36,26 @@ public class HttpClientServiceImpl implements HttpClientService {
     }
 
     @Override
-    public String doPost(String url, Map<String, String> parameters) {
-        HttpPost httpPost = new HttpPost(url);
-        List<NameValuePair> params = Lists.newArrayList();
-        for (String key : parameters.keySet()) {
-            params.add(new BasicNameValuePair(key, parameters.get(key)));
+    public String doPost(String url, Map<String, String> parameters, String data) {
+        URIBuilder uriBuilder = new URIBuilder();
+        uriBuilder.setHost(url);
+        if (parameters != null && !parameters.isEmpty()) {
+            for (String key : parameters.keySet()) {
+                uriBuilder.setParameter(key, parameters.get(key));
+            }
         }
+        URI uri = null;
         try {
-            httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
+            uri = uriBuilder.build();
+        } catch (URISyntaxException e) {
+            return null;
+        }
+        HttpPost httpPost = new HttpPost(uri);
+        try {
+            StringEntity entity = new StringEntity(data, StandardCharsets.UTF_8);
+            entity.setContentType("text/xml");
+            entity.setContentEncoding(StandardCharsets.UTF_8.toString());
+            httpPost.setEntity(entity);
             CloseableHttpResponse res = new DefaultHttpClient().execute(httpPost);
             if (res != null && res.getStatusLine().getStatusCode() == 200) {
                 return EntityUtils.toString(res.getEntity(), StandardCharsets.UTF_8);

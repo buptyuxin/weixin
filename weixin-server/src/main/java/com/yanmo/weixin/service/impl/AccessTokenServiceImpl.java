@@ -1,9 +1,8 @@
 package com.yanmo.weixin.service.impl;
 
-import com.yanmo.weixin.domain.Errors;
+import com.yanmo.weixin.domain.ResultDO;
 import com.yanmo.weixin.domain.json.AccessTokenDO;
 import com.yanmo.weixin.domain.json.BaseJsonDO;
-import com.yanmo.weixin.domain.ResultDO;
 import com.yanmo.weixin.log.WxLog;
 import com.yanmo.weixin.parser.JsonParser;
 import com.yanmo.weixin.service.AccessTokenService;
