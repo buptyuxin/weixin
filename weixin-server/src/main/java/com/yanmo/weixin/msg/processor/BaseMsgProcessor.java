@@ -3,6 +3,7 @@ package com.yanmo.weixin.msg.processor;
 import com.yanmo.weixin.domain.BaseKeyValuePairDO;
 import com.yanmo.weixin.domain.MsgDO;
 import com.yanmo.weixin.domain.ResultDO;
+import com.yanmo.weixin.msg.rule.ReplyRuleDO;
 
 import java.util.Map;
 
@@ -11,11 +12,10 @@ import java.util.Map;
  */
 public abstract class BaseMsgProcessor {
 
-    private Map<String, String> replyRule;  // 对应字段规则，toUserName -> fromUserName
-    // fromUserName -> toUserName
+    private ReplyRuleDO replyRuleDO;
 
-    public void setReplyRule(Map<String, String> replyRule) {
-        this.replyRule = replyRule;
+    public void setReplyRuleDO(ReplyRuleDO replyRuleDO) {
+        this.replyRuleDO = replyRuleDO;
     }
 
     public MsgDO process(MsgDO recvMsg) {
@@ -37,6 +37,7 @@ public abstract class BaseMsgProcessor {
 
     private void fillReplyMsg(MsgDO recvMsg, MsgDO replyMsg) {
         // 对应回复规则，主要是发送、接收方
+        Map<String, String> replyRule = replyRuleDO.getRuleMap();
         for (String key : replyRule.keySet()) {
             BaseKeyValuePairDO replyProperty = new BaseKeyValuePairDO();
             for (BaseKeyValuePairDO kv : recvMsg.getProperties()) {

@@ -3,6 +3,7 @@ package com.yanmo.weixin.utils;
 import com.google.common.collect.Lists;
 import com.yanmo.weixin.domain.BaseKeyValuePairDO;
 import com.yanmo.weixin.domain.MsgDO;
+import com.yanmo.weixin.log.WxLog;
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;

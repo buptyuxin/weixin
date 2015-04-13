@@ -65,4 +65,13 @@ public class BaseKeyValuePairDO implements Serializable {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "BaseKeyValuePairDO{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                ", subPairs=" + subPairs.toString() +
+                '}';
+    }
 }

@@ -4,7 +4,14 @@ import com.yanmo.weixin.domain.BaseKeyValuePairDO;
 import com.yanmo.weixin.domain.Errors;
 import com.yanmo.weixin.domain.MsgDO;
 import com.yanmo.weixin.domain.ResultDO;
+import com.yanmo.weixin.log.WxLog;
 import com.yanmo.weixin.service.MsgSendService;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by yanmo.yx on 2015/4/1.
@@ -12,9 +19,14 @@ import com.yanmo.weixin.service.MsgSendService;
 public class TextMsgProcessor extends BaseMsgProcessor {
 
     private MsgSendService msgSendService;
+    private List<String> jokes;
 
     public void setMsgSendService(MsgSendService msgSendService) {
         this.msgSendService = msgSendService;
+    }
+
+    public void setJokes(List<String> jokes) {
+        this.jokes = jokes;
     }
 
     @Override
@@ -29,12 +41,15 @@ public class TextMsgProcessor extends BaseMsgProcessor {
         replyMsg.addProperty(msgType);
 
         BaseKeyValuePairDO content = new BaseKeyValuePairDO();
-        msgType.setKey("Content");
+        content.setKey("Content");
         for (BaseKeyValuePairDO kv : recvMsg.getProperties()) {
             if (!"Content".equals(kv.getKey())) {
                 continue;
             }
-            content.setValue(kv.getValue());
+            int x = (new Random()).nextInt(jokes.size());
+            SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
+            String text = today.format(new Date()) + "\n\n";
+            content.setValue(text+jokes.get(x).replaceAll("\r\n", "\n"));
             replyMsg.addProperty(content);
             result.setModule(replyMsg);
             return result;

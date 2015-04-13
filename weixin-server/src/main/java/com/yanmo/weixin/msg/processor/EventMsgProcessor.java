@@ -5,6 +5,8 @@ import com.yanmo.weixin.domain.Errors;
 import com.yanmo.weixin.domain.MsgDO;
 import com.yanmo.weixin.domain.ResultDO;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by yanmo.yx on 2015/4/3.
  */
@@ -21,12 +23,16 @@ public class EventMsgProcessor extends BaseMsgProcessor {
         replyMsg.addProperty(msgType);
 
         BaseKeyValuePairDO content = new BaseKeyValuePairDO();
-        msgType.setKey("Content");
+        content.setKey("Content");
         for (BaseKeyValuePairDO kv : recvMsg.getProperties()) {
             if (!"Event".equals(kv.getKey())) {
                 continue;
             }
-            content.setValue(kv.getValue());
+            if ("subscribe".equals(kv.getValue())) {
+                content.setValue("感谢你关注鱼子酱的订阅号");
+            } else if ("unsubscribe".equals(kv.getValue())) {
+                content.setValue(" ");
+            }
             replyMsg.addProperty(content);
             result.setModule(replyMsg);
             return result;

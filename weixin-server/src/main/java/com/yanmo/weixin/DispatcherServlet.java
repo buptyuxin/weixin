@@ -1,11 +1,13 @@
 package com.yanmo.weixin;
 
 import com.google.gson.Gson;
-import com.yanmo.weixin.domain.MsgDO;
 import com.yanmo.weixin.log.WxLog;
 import com.yanmo.weixin.service.MsgProcessService;
+import com.yanmo.weixin.service.impl.AccessTokenServiceImpl;
+import com.yanmo.weixin.service.impl.HttpClientServiceImpl;
 import com.yanmo.weixin.utils.EnvUtils;
 import com.yanmo.weixin.utils.SecurityUtils;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -13,6 +15,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -61,6 +64,9 @@ public class DispatcherServlet extends GenericServlet {
         // 开个定时任务每一个小时更新一次access token
         ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
         ses.scheduleAtFixedRate((Runnable) ctx.getBean("accessTokenRunnable"), 0, EnvUtils.ACCESS_TOKEN_TASK_PERIOD, TimeUnit.HOURS);
+
+        // 注入消息处理服务
+        this.msgProcessService = (MsgProcessService) ctx.getBean("msgProcessService");
     }
 
     @Override
@@ -105,15 +111,14 @@ public class DispatcherServlet extends GenericServlet {
         }
     }
 
-    private void doPost(HttpServletRequest req, HttpServletResponse res) {
+    private void doPost(HttpServletRequest req, HttpServletResponse res) throws UnsupportedEncodingException {
+        req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
         if (!SecurityUtils.wxCheck(req)) {
             return;
         }
         if (POST_CONTENT_TYPE_TEXT.equals(req.getContentType())) {
             String xml = parse(req);
-            if (msgProcessService == null) {
-                getCtx().getBean("recvMsgService");
-            }
             String reply = msgProcessService.processXmlMsg(xml);
             try {
                 res.getWriter().write(reply);
@@ -144,10 +149,6 @@ public class DispatcherServlet extends GenericServlet {
         return sb.toString();
     }
 
-    private void processXml(String xml) {
-
-    }
-
     private void processJson(String json) {
         Gson gson = new Gson();
 
@@ -155,6 +156,13 @@ public class DispatcherServlet extends GenericServlet {
 
     public static void main(String[] args) {
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("parser-beans.xml");
+        if (((AccessTokenServiceImpl)context.getBean("accessTokenService")).getHttpClientService() == null) {
+            System.out.println("not inject");
+        }
+        context.getAutowireCapableBeanFactory().createBean(HttpClientServiceImpl.class, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false);
+        if (((AccessTokenServiceImpl)context.getBean("accessTokenService")).getHttpClientService() == null) {
+            System.out.println("still not inject");
+        }
         System.out.println("asdfa");
     }
 }

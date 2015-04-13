@@ -2,6 +2,7 @@ package com.yanmo.weixin.service.impl;
 
 import com.yanmo.weixin.domain.BaseKeyValuePairDO;
 import com.yanmo.weixin.domain.MsgDO;
+import com.yanmo.weixin.log.WxLog;
 import com.yanmo.weixin.msg.processor.BaseMsgProcessor;
 import com.yanmo.weixin.service.MsgProcessService;
 import com.yanmo.weixin.utils.XmlUtils;
@@ -14,10 +15,6 @@ import java.util.List;
 public class MsgProcessServiceImpl implements MsgProcessService {
 
     private List<BaseMsgProcessor> msgProcessors;
-
-    public List<BaseMsgProcessor> getMsgProcessors() {
-        return msgProcessors;
-    }
 
     public void setMsgProcessors(List<BaseMsgProcessor> msgProcessors) {
         this.msgProcessors = msgProcessors;
