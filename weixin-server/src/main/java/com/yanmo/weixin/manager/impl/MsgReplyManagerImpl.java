@@ -9,6 +9,12 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public class MsgReplyManagerImpl implements MsgReplyManager,InitializingBean {
 
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        
+    }
+
     @Override
     public MsgDO replyTextMsgDO(String content) {
         return null;
@@ -17,10 +23,5 @@ public class MsgReplyManagerImpl implements MsgReplyManager,InitializingBean {
     @Override
     public MsgDO replyEventMsgDO(String event) {
         return null;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-
     }
 }
